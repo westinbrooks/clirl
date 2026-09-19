@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Main {
-    static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         // Utils
         Scanner input = new Scanner(System.in);
 
