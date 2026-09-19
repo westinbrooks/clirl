@@ -28,7 +28,7 @@ jobs:
           cache: maven
 
       - name: Set release version
-        if: startsWith(github.ref, "refs/tags/")
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           mvn --batch-mode versions:set \
