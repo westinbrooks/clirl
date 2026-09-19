@@ -9,18 +9,16 @@ public class User {
     // User Info
     private final String name;
     private final Faction faction;
-    private Weapon weapon; // Not finalized as I may implement a system to switch weapons independent of user's faction choice
+    private final Weapon weapon;
 
     // User Stats
-    private int baseHitPoints;
     private int hitPoints;
     private int hunger; // 0 - 100 %
-    private double damage;
-    private double accuracy;
 
     // User Inventory
     private int breadAmount;
     private int pizzaAmount;
+
 
     // Turn Counter
     private int turnCounter = 1;
@@ -308,13 +306,13 @@ public class User {
     }
 
     private double calculateDamage () { // Applies any valid buffs & debuffs to the User's damage value
-        damage = weapon.getBaseDamage(); // Will adjust formula if / when I develop the buff & debuff system
-        return damage;
+        // Will adjust formula if / when I develop the buff & debuff system
+        return weapon.getBaseDamage();
     }
 
     private double calculateAccuracy () { // Applies any valid buffs & debuffs to the User's accuracy value
-        accuracy = weapon.getBaseAccuracy(); // Will adjust formula if / when I develop the buff & debuff system
-        return accuracy;
+        // Will adjust formula if / when I develop the buff & debuff system
+        return weapon.getBaseAccuracy();
     }
 
     public String getName () {
@@ -324,18 +322,6 @@ public class User {
     public int getHitPoints () {
         if (hitPoints < 0) hitPoints = 0;
         return hitPoints;
-    }
-
-    public int getBaseHitPoints () {
-        return baseHitPoints;
-    }
-
-    public Faction getFaction () {
-        return faction;
-    }
-
-    public Weapon getWeapon () {
-        return weapon;
     }
 
     public int getHunger () {

@@ -2,20 +2,14 @@ import java.util.Random;
 
 public class Enemy {
     private final String name;
-    private final int baseHitPoints;
     private int hitPoints;
-    private final int baseDamage;
     private double damage;
-    private final int baseAccuracy;
-    private double accuracy;
+    private final double accuracy;
 
     Enemy(String name, int baseHitPoints, int baseDamage, int baseAccuracy) {
         this.name = name;
-        this.baseHitPoints = baseHitPoints;
         this.hitPoints = baseHitPoints;
-        this.baseDamage = baseDamage;
         this.damage = baseDamage;
-        this.baseAccuracy = baseAccuracy;
         this.accuracy = baseAccuracy;
     }
 
@@ -83,17 +77,5 @@ public class Enemy {
     public int getHitPoints () {
         if (hitPoints < 0) hitPoints = 0;
         return hitPoints;
-    }
-
-    public int getBaseHitPoints () {
-        return baseHitPoints;
-    }
-
-    public int getBaseDamage () {
-        return baseDamage;
-    }
-
-    public int getBaseAccuracy () {
-        return baseAccuracy;
     }
 }

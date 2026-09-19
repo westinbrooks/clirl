@@ -1,6 +1,6 @@
 public class Food {
-    private String name;
-    private int saturation;
+    private final String name;
+    private final int saturation;
 
     Food (String name, int saturation) {
         this.name = name;

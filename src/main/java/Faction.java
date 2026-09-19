@@ -1,12 +1,9 @@
 public class Faction {
     private final String name;
-    private final int id; // 0: Unknown, 1: Warrior, 2: Archer, 3: Wizard
     private final int baseHitPoints;
     private final Weapon baseWeapon;
 
     public Faction(int id) {
-        this.id = id;
-
         if (id == 1) {
             this.name = "Warrior";
             this.baseHitPoints = 100;
@@ -32,9 +29,5 @@ public class Faction {
 
     public String getName() {
         return name;
-    }
-
-    public int getId() {
-        return id;
     }
 }
