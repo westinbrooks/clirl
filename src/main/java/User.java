@@ -50,43 +50,43 @@ public class User {
                     case "1" -> {
                         Core.println("Every turn starts by showcasing basic info and your current stats." +
                                 "\nYou begin by choosing an action ('Attack', 'Eat', or 'Inspect Enemy')");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("After you complete your chosen action, the enemy will take its turn.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("Finally, the cycle repeats until you either die or defeat the enemy.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         validInput = true;
                     }
                     case "2" -> {
                         Core.println("There are multiple types of enemies you will encounter, varying in stats and abilities.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("The type of enemy you encounter is random, but you will be informed the upcoming enemy at the start of an encounter.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("Upon defeating an enemy, you will have the option to continue to fight another enemy.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         validInput = true;
                     }
                     case "3" -> {
                         Core.println("Before the start of the game, you will be prompted to choose a Faction." +
                                 "\nCurrently, there are 2 Factions to choose from");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("The Warriors, who specialize in consistent damage with perfect accuracy," +
                                 "\nand the Archers, yielding high damage in exchange for lower health and the risk of missing.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         validInput = true;
                     }
                     case "4" -> {
                         Core.println("Passive effects trigger at the start of your turn.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("Currently, there are two passive effects: hunger and health regeneration.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("You will lose 10% saturation from hunger every turn." +
                                 "\nIf you fall below 80% saturation, you will no longer passively heal at the start of your turn.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("However, when you're at 80% or higher saturation, you will gain 10 health at the start of your turn automatically.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("Passive effects are what allow you to survive against tough enemies over multiple encounters, so make sure to keep track of them.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         validInput = true;
                     }
                     case "5" -> {
@@ -148,7 +148,7 @@ public class User {
             if (enemy.getHitPoints() == 0) enemyAlive = false; // Checks if enemy is still alive
 
             if (enemyAlive) {
-                Thread.sleep(500);
+                Core.threadSleep();
                 enemy.enemyTurn(this, enemy); // Executes enemy action
             }
 
@@ -183,7 +183,7 @@ public class User {
 
         Core.println("\n" + enemy.getName() + " dealt " + (int) damage + " damage!\n" + "You're now at " + user.hitPoints + " health.\n");
 
-        Thread.sleep(500);
+        Core.threadSleep();
     }
 
     private void userEat () throws InterruptedException {

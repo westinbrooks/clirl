@@ -35,15 +35,18 @@ public class Main {
             switch (userInput) {
                 case "1" -> {
                     Core.setPrintSpeed(0);
+                    Core.setSleepSpeed(0);
                     validInput = true;
                 }
                 case "2" -> {
                     Core.setPrintSpeed(10);
+                    Core.setSleepSpeed(200);
                     validInput = true;
                 }
-                case "3" -> validInput = true; // No need to specify printSpeed since it's assigned to 50ms on program start
+                case "3" -> validInput = true; // printSpeed: 25ms | sleepSpeed: 500ms
                 case "4" -> {
                     Core.setPrintSpeed(50);
+                    Core.setSleepSpeed(1000);
                     validInput = true;
                 }
                 default -> Core.println("'" + userInput + "' is not a valid input!");
