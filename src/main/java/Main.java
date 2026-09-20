@@ -42,10 +42,10 @@ public class Main {
                 }
                 case "2" -> {
                     Core.setPrintSpeed(10);
-                    Core.setSleepSpeed(200);
+                    Core.setSleepSpeed(500);
                     validInput = true;
                 }
-                case "3" -> validInput = true; // printSpeed: 25ms | sleepSpeed: 500ms
+                case "3" -> validInput = true; // printSpeed: 25ms | sleepSpeed: 750ms
                 case "4" -> {
                     Core.setPrintSpeed(50);
                     Core.setSleepSpeed(1000);

@@ -49,7 +49,7 @@ public class User {
                 switch (userInput) {
                     case "1" -> {
                         Core.println("Every turn starts by showcasing basic info and your current stats." +
-                                "\nYou begin by choosing an action ('Attack', 'Eat', or 'Inspect Enemy')");
+                                "\nYou begin by choosing an action ('Attack', 'Eat', or 'Inspect Enemy').");
                         Core.threadSleep();
                         Core.println("After you complete your chosen action, the enemy will take its turn.");
                         Core.threadSleep();
@@ -68,7 +68,7 @@ public class User {
                     }
                     case "3" -> {
                         Core.println("Before the start of the game, you will be prompted to choose a Faction." +
-                                "\nCurrently, there are 2 Factions to choose from");
+                                "\nCurrently, there are 2 Factions to choose from.");
                         Core.threadSleep();
                         Core.println("The Warriors, who specialize in consistent damage with perfect accuracy," +
                                 "\nand the Archers, yielding high damage in exchange for lower health and the risk of missing.");

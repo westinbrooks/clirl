@@ -1,6 +1,6 @@
 public class Core {
     private static int printSpeed = 25;
-    private static int sleepSpeed = 500;
+    private static int sleepSpeed = 750;
 
     public static void print(String string) throws InterruptedException { // Prints characters of a String according to defined time in milliseconds
         for (char character : string.toCharArray()) { // Prints each character one-by-one
