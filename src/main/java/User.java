@@ -158,17 +158,6 @@ public class User {
         }
     }
 
-    public boolean userContinue() throws InterruptedException {
-        boolean validInput = false;
-        while (!validInput) {
-            Core.println("Would you like to continue? [Y/N]: ");
-            userInput = input.nextLine().trim();
-            if (userInput.equalsIgnoreCase("Y") || userInput.equalsIgnoreCase("N")) validInput = true;
-            else Core.println("'" + userInput + "' is not a valid option.\n");
-        }
-        return userInput.equalsIgnoreCase("Y");
-    }
-
     private void userAttack(Enemy enemy) throws InterruptedException {
         double damage = calculateDamage();
         Random accuracyCheck = new Random();
@@ -303,6 +292,17 @@ public class User {
     private void userConfirm() throws InterruptedException {
         Core.println("\nPress 'Enter' to continue.");
         userInput = input.nextLine().trim();
+    }
+
+    public boolean userContinue() throws InterruptedException {
+        boolean validInput = false;
+        while (!validInput) {
+            Core.println("\nWould you like to continue? [Y/N]: ");
+            userInput = input.nextLine().trim();
+            if (userInput.equalsIgnoreCase("Y") || userInput.equalsIgnoreCase("N")) validInput = true;
+            else Core.println("'" + userInput + "' is not a valid option.\n");
+        }
+        return userInput.equalsIgnoreCase("Y");
     }
 
     public String userStats() {

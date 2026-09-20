@@ -80,7 +80,10 @@ public class Enemy {
     public static void enemyHurt(Enemy enemy, double damage) throws InterruptedException {
         enemy.hitPoints -= (int) (damage + 0.5);
         enemy.hitPoints = enemy.getHitPoints(); // Prevents negative hitPoints value
-        Core.println("You dealt " + (int) damage + " damage!\n" + enemy.name + " is now at " + enemy.hitPoints + " health.");
+
+        // Checks if enemy is still alive and prints relevant response
+        if (enemy.hitPoints == 0) Core.println("You dealt " + (int) damage + " damage!\nYou killed " + enemy.name + "!");
+        else Core.println("You dealt " + (int) damage + " damage!\n" + enemy.name + " is now at " + enemy.hitPoints + " health.");
     }
 
     private double calculateDamage(Enemy enemy) { // Applies any valid buffs & debuffs to the User's damage value
