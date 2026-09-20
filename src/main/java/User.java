@@ -102,8 +102,9 @@ public class User {
 
     public void userTurn () throws InterruptedException {
         boolean enemyAlive = true;
+        boolean isBossRound = (turnCounter % 5) == 0; // Triggers a boss round every 5 encounters
 
-        Enemy enemy = Enemy.enemyEncounter();
+        Enemy enemy = Enemy.enemyEncounter(isBossRound);
         userConfirm(); // Pause game until user confirmation to stabilize printing speed
 
         while (enemyAlive) {
@@ -250,7 +251,7 @@ public class User {
                     breadAmount--;
                     hunger += bread.getSaturation();
                     if (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                    Core.println("You ate " + bread.getName() + "and are now " + hunger + "% full.");
+                    Core.println("You ate " + bread.getName() + " and are now " + hunger + "% full.");
                     validInput = true;
                 } else Core.println("'" + userInput + "' is not a valid option.\n");
             }
