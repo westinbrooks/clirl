@@ -227,17 +227,19 @@ public class User {
                     case "1" -> {
                         Food bread = Food.bread(); // Initialize bread object to pull data from
                         breadAmount--;
+                        hitPoints += bread.getInstantHealth();
                         hunger += bread.getSaturation();
                         if (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                        Core.println("You ate " + bread.getName() + " and are now " + hunger + "% full.");
+                        Core.println("You ate " + bread.getName() + " and are now at " + hitPoints + " health and " + hunger + "% hunger.");
                         validInput = true;
                     }
                     case "2" -> {
                         Food pizza = Food.pizza(); // Initialize pizza object to pull data from
                         pizzaAmount--;
+                        hitPoints += pizza.getInstantHealth();
                         hunger += pizza.getSaturation();
                         if  (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                        Core.println("You ate " + pizza.getName() + " and are now " + hunger + "% full.");
+                        Core.println("You ate " + pizza.getName() + " and are now at " + hitPoints + " health and " + hunger + "% hunger.");
                         validInput = true;
                     }
                     default -> Core.println("'" + userInput + "' is not a valid option.\n");
@@ -249,9 +251,10 @@ public class User {
                 if (userInput.equals("1")) {
                     Food bread = Food.bread(); // Initialize bread object to pull data from
                     breadAmount--;
+                    hitPoints += bread.getInstantHealth();
                     hunger += bread.getSaturation();
                     if (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                    Core.println("You ate " + bread.getName() + " and are now " + hunger + "% full.");
+                    Core.println("You ate " + bread.getName() + " and are now at " + hitPoints + " health and " + hunger + "% hunger.");
                     validInput = true;
                 } else Core.println("'" + userInput + "' is not a valid option.\n");
             }
@@ -261,9 +264,10 @@ public class User {
                 if (userInput.equals("1")) {
                     Food pizza = Food.pizza(); // Initialize pizza object to pull data from
                     pizzaAmount--;
+                    hitPoints += pizza.getInstantHealth();
                     hunger += pizza.getSaturation();
                     if  (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                    Core.println("You ate " + pizza.getName() + " and are now " + hunger + "% full.");
+                    Core.println("You ate " + pizza.getName() + " and are now at " + hitPoints + " health and " + hunger + "% hunger.");
                     validInput = true;
                 } else Core.println("'" + userInput + "' is not a valid option.\n");
             }
