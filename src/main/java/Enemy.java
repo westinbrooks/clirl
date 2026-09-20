@@ -19,15 +19,15 @@ public class Enemy {
     }
 
     public static Enemy zombie() {
-        return new Enemy("Zombie", false, 100, 10, 100);
+        return new Enemy("Zombie", false, 50, 10, 100);
     }
 
     public static Enemy skeleton() {
-        return new Enemy("Skeleton", false, 80, 15, 80);
+        return new Enemy("Skeleton", false, 40, 20, 80);
     }
 
     public static Enemy giant() {
-        return new Enemy("Giant", true, 250, 15, 100);
+        return new Enemy("Giant", true, 100, 15, 100);
     }
 
     public String enemyStats() {
