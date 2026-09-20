@@ -1,8 +1,11 @@
 import java.util.Random;
 
 public class Enemy {
+    // Enemy Info
     private final String name;
     private final boolean isBoss;
+
+    // Enemy Stats
     private int hitPoints;
     private double damage;
     private final double accuracy;
@@ -27,7 +30,7 @@ public class Enemy {
         return new Enemy("Giant", true, 250, 15, 100);
     }
 
-    public String enemyStats () {
+    public String enemyStats() {
         String stats = "Enemy: " + name;
 
         if (isBoss) stats += " (Boss)"; // Adds Boss title if appropriate
@@ -36,7 +39,7 @@ public class Enemy {
         return stats;
     }
 
-    public static Enemy enemyEncounter (boolean isBossRound) throws InterruptedException {
+    public static Enemy enemyEncounter(boolean isBossRound) throws InterruptedException {
         Enemy enemy = null; // Initializes enemy object
 
         // Normal enemy encounter
@@ -62,7 +65,7 @@ public class Enemy {
         return enemy;
     }
 
-    public void enemyTurn (User user, Enemy enemy) throws InterruptedException { // May add further functionality, such as independent item usage, in the future
+    public void enemyTurn(User user, Enemy enemy) throws InterruptedException { // May add further functionality, such as independent item usage, in the future
         enemyAttack(user, enemy);
     }
 
@@ -74,22 +77,22 @@ public class Enemy {
         else Core.println(enemy.name + " missed!\n"); // Triggers if enemy failed accuracy check
     }
 
-    public static void enemyHurt (Enemy enemy, double damage) throws InterruptedException {
+    public static void enemyHurt(Enemy enemy, double damage) throws InterruptedException {
         enemy.hitPoints -= (int) (damage + 0.5);
         enemy.hitPoints = enemy.getHitPoints(); // Prevents negative hitPoints value
         Core.println("You dealt " + (int) damage + " damage!\n" + enemy.name + " is now at " + enemy.hitPoints + " health.");
     }
 
-    private double calculateDamage (Enemy enemy) { // Applies any valid buffs & debuffs to the User's damage value
+    private double calculateDamage(Enemy enemy) { // Applies any valid buffs & debuffs to the User's damage value
         damage = enemy.damage; // Will adjust formula if / when I develop the buff & debuff system
         return damage;
     }
 
-    public String getName () {
+    public String getName() {
         return name;
     }
 
-    public int getHitPoints () {
+    public int getHitPoints() {
         if (hitPoints < 0) hitPoints = 0;
         return hitPoints;
     }

@@ -23,11 +23,11 @@ public class User {
     // Turn Counter
     private int turnCounter = 1;
 
-    public User (String name, int factionID) {
+    public User(String name, Faction faction) {
         this.name = name;
-        faction = new Faction(factionID);
-        this.weapon = faction.getBaseWeapon();
-        this.hitPoints = faction.getBaseHitPoints();
+        this.faction = faction;
+        this.weapon = faction.baseWeapon();
+        this.hitPoints = faction.baseHitPoints();
         this.hunger = 100;
         this.breadAmount = 5;
         this.pizzaAmount = 1;
@@ -100,7 +100,7 @@ public class User {
         }
     }
 
-    public void userTurn () throws InterruptedException {
+    public void userTurn() throws InterruptedException {
         boolean enemyAlive = true;
         boolean isBossRound = (turnCounter % 5) == 0; // Triggers a boss round every 5 encounters
 
@@ -158,7 +158,7 @@ public class User {
         }
     }
 
-    public boolean userContinue () throws InterruptedException {
+    public boolean userContinue() throws InterruptedException {
         boolean validInput = false;
         while (!validInput) {
             Core.println("Would you like to continue? [Y/N]: ");
@@ -169,7 +169,7 @@ public class User {
         return userInput.equalsIgnoreCase("Y");
     }
 
-    private void userAttack (Enemy enemy) throws InterruptedException {
+    private void userAttack(Enemy enemy) throws InterruptedException {
         double damage = calculateDamage();
         Random accuracyCheck = new Random();
 
@@ -177,7 +177,7 @@ public class User {
         else Core.println("You missed!"); // Triggers if user failed accuracy check
     }
 
-    public static void userHurt (User user, Enemy enemy, double damage) throws InterruptedException {
+    public static void userHurt(User user, Enemy enemy, double damage) throws InterruptedException {
         user.hitPoints -= (int) (damage + 0.5);
         user.hitPoints = user.getHitPoints(); // Prevents negative hitPoints value
 
@@ -186,7 +186,7 @@ public class User {
         Core.threadSleep();
     }
 
-    private void userEat () throws InterruptedException {
+    private void userEat() throws InterruptedException {
         boolean hasBread = breadAmount > 0;
         boolean hasPizza = pizzaAmount > 0;
         boolean validInput = false;
@@ -270,7 +270,7 @@ public class User {
         }
     }
 
-    private void userPassiveHeal () throws InterruptedException {
+    private void userPassiveHeal() throws InterruptedException {
         int healAmount = 10; // May be adjusted for balancing purposes
         if (hunger >= 80) {
             hitPoints += healAmount;
@@ -279,53 +279,49 @@ public class User {
         else Core.println("You are hungry! Eat some food to passively heal.");
     }
 
-    private void userPassiveHunger () {
+    private void userPassiveHunger() {
         int hungerAmount = 10; // May be adjusted for balancing purposes
         if (hunger > 0) {
             hunger = Math.max(0, hunger - hungerAmount); // Avoid notifying user since this is implied and would only clutter terminal
         }
     }
 
-    private void userInspect (Enemy enemy) throws InterruptedException {
+    private void userInspect(Enemy enemy) throws InterruptedException {
         Core.println(enemy.enemyStats());
     }
 
-    private void userDeath () throws InterruptedException {
+    private void userDeath() throws InterruptedException {
         Core.println("\n\n\nYou died! Press any key to exit.");
         userInput = input.nextLine().trim();
         System.exit(0);
     }
 
-    private void userConfirm () throws InterruptedException {
+    private void userConfirm() throws InterruptedException {
         Core.println("\nPress 'Enter' to continue.");
         userInput = input.nextLine().trim();
     }
 
-    public String userStats () {
-        return "Faction: " + faction.getName() + " | Weapon: " + weapon.getName()
+    public String userStats() {
+        return "Faction: " + faction.name() + " | Weapon: " + weapon.getName()
                 + "\nHP: " + getHitPoints() + " | Hunger: " + getHunger() + "% | Damage: " + calculateDamage() + " | Accuracy: " + calculateAccuracy() + "%";
     }
 
-    private double calculateDamage () { // Applies any valid buffs & debuffs to the User's damage value
+    private double calculateDamage() { // Applies any valid buffs & debuffs to the User's damage value
         // Will adjust formula if / when I develop the buff & debuff system
         return weapon.getBaseDamage();
     }
 
-    private double calculateAccuracy () { // Applies any valid buffs & debuffs to the User's accuracy value
+    private double calculateAccuracy() { // Applies any valid buffs & debuffs to the User's accuracy value
         // Will adjust formula if / when I develop the buff & debuff system
         return weapon.getBaseAccuracy();
     }
 
-    public String getName () {
-        return name;
-    }
-
-    public int getHitPoints () {
+    public int getHitPoints() {
         if (hitPoints < 0) hitPoints = 0;
         return hitPoints;
     }
 
-    public int getHunger () {
+    public int getHunger() {
         return hunger;
     }
 }

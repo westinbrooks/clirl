@@ -22,7 +22,7 @@ public class Core {
 
     public static void threadSleep() {
         try {
-            Thread.sleep(sleepSpeed);
+            Thread.sleep(sleepSpeed); // Pauses code execution for user-defined time in milliseconds
         } catch (InterruptedException ignored) {}
     }
 

@@ -1,7 +1,7 @@
 public class Weapon {
     private final String name;
-    private final int baseDamage; // >= 0 flat
-    private final int baseAccuracy; // 0 - 100 %
+    private final int baseDamage;
+    private final int baseAccuracy;
 
     private Weapon(String name, int baseDamage, int baseAccuracy) {
         this.name = name;
@@ -17,15 +17,15 @@ public class Weapon {
         return new Weapon("Bow", 25, 80);
     }
 
-    String getName () {
+    String getName() {
         return name;
     }
 
-    int getBaseDamage () {
+    int getBaseDamage() {
         return baseDamage;
     }
 
-    int getBaseAccuracy () {
+    int getBaseAccuracy() {
         return baseAccuracy;
     }
 }

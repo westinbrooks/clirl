@@ -1,14 +1,16 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        // Utils
+        // Utilities
         Scanner input = new Scanner(System.in);
 
-        // Internal Variables
-        User user = null;
+        // Internals
         boolean gameActive = true;
         boolean validInput = false;
+
+        // User Info
+        User user = null;
         String userInput;
         String userName = "";
 
@@ -76,11 +78,11 @@ public class Main {
             Core.print("What is your faction? [1: Warrior, 2: Archer]: ");
             userInput = input.next();
             if (userInput.equals("1")) {
-                user = new User(userName, 1);
+                user = new User(userName, Faction.warrior());
                 validInput = true;
             }
             else if (userInput.equals("2")) {
-                user = new User(userName, 2);
+                user = new User(userName, Faction.archer());
                 validInput = true;
             }
             else Core.println("'" + userInput + "' is not a valid input!");
