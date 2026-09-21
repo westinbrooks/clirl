@@ -1,33 +1,10 @@
-public class Faction {
-    private final String name;
-    private final int baseHitPoints;
-    private final Weapon baseWeapon;
+public record Faction(String name, int baseHitPoints, Weapon baseWeapon) {
 
-    public Faction(int id) {
-        if (id == 1) {
-            this.name = "Warrior";
-            this.baseHitPoints = 100;
-            this.baseWeapon = Weapon.sword();
-        }
-        else if (id == 2) {
-            this.name = "Archer";
-            this.baseHitPoints = 80;
-            this.baseWeapon = Weapon.bow();
-        }
-        else {
-            throw new IllegalArgumentException("Invalid faction ID: " + id);
-        }
+    public static Faction warrior() {
+        return new Faction("Warrior", 100, Weapon.sword());
     }
 
-    public Weapon getBaseWeapon() {
-        return baseWeapon;
-    }
-
-    public int getBaseHitPoints() {
-        return baseHitPoints;
-    }
-
-    public String getName() {
-        return name;
+    public static Faction archer() {
+        return new Faction("Archer", 80, Weapon.bow());
     }
 }

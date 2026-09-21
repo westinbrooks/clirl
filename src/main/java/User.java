@@ -23,11 +23,11 @@ public class User {
     // Turn Counter
     private int turnCounter = 1;
 
-    public User (String name, int factionID) {
+    public User(String name, Faction faction) {
         this.name = name;
-        faction = new Faction(factionID);
-        this.weapon = faction.getBaseWeapon();
-        this.hitPoints = faction.getBaseHitPoints();
+        this.faction = faction;
+        this.weapon = faction.baseWeapon();
+        this.hitPoints = faction.baseHitPoints();
         this.hunger = 100;
         this.breadAmount = 5;
         this.pizzaAmount = 1;
@@ -49,44 +49,44 @@ public class User {
                 switch (userInput) {
                     case "1" -> {
                         Core.println("Every turn starts by showcasing basic info and your current stats." +
-                                "\nYou begin by choosing an action ('Attack', 'Eat', or 'Inspect Enemy')");
-                        Thread.sleep(500);
+                                "\nYou begin by choosing an action ('Attack', 'Eat', or 'Inspect Enemy').");
+                        Core.threadSleep();
                         Core.println("After you complete your chosen action, the enemy will take its turn.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("Finally, the cycle repeats until you either die or defeat the enemy.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         validInput = true;
                     }
                     case "2" -> {
                         Core.println("There are multiple types of enemies you will encounter, varying in stats and abilities.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("The type of enemy you encounter is random, but you will be informed the upcoming enemy at the start of an encounter.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("Upon defeating an enemy, you will have the option to continue to fight another enemy.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         validInput = true;
                     }
                     case "3" -> {
                         Core.println("Before the start of the game, you will be prompted to choose a Faction." +
-                                "\nCurrently, there are 2 Factions to choose from");
-                        Thread.sleep(500);
+                                "\nCurrently, there are 2 Factions to choose from.");
+                        Core.threadSleep();
                         Core.println("The Warriors, who specialize in consistent damage with perfect accuracy," +
                                 "\nand the Archers, yielding high damage in exchange for lower health and the risk of missing.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         validInput = true;
                     }
                     case "4" -> {
                         Core.println("Passive effects trigger at the start of your turn.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("Currently, there are two passive effects: hunger and health regeneration.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("You will lose 10% saturation from hunger every turn." +
                                 "\nIf you fall below 80% saturation, you will no longer passively heal at the start of your turn.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("However, when you're at 80% or higher saturation, you will gain 10 health at the start of your turn automatically.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         Core.println("Passive effects are what allow you to survive against tough enemies over multiple encounters, so make sure to keep track of them.");
-                        Thread.sleep(500);
+                        Core.threadSleep();
                         validInput = true;
                     }
                     case "5" -> {
@@ -100,10 +100,11 @@ public class User {
         }
     }
 
-    public void userTurn () throws InterruptedException {
+    public void userTurn() throws InterruptedException {
         boolean enemyAlive = true;
+        boolean isBossRound = (turnCounter % 5) == 0; // Triggers a boss round every 5 encounters
 
-        Enemy enemy = Enemy.enemyEncounter();
+        Enemy enemy = Enemy.enemyEncounter(isBossRound);
         userConfirm(); // Pause game until user confirmation to stabilize printing speed
 
         while (enemyAlive) {
@@ -147,7 +148,7 @@ public class User {
             if (enemy.getHitPoints() == 0) enemyAlive = false; // Checks if enemy is still alive
 
             if (enemyAlive) {
-                Thread.sleep(500);
+                Core.threadSleep();
                 enemy.enemyTurn(this, enemy); // Executes enemy action
             }
 
@@ -157,18 +158,7 @@ public class User {
         }
     }
 
-    public boolean userContinue () throws InterruptedException {
-        boolean validInput = false;
-        while (!validInput) {
-            Core.println("Would you like to continue? [Y/N]: ");
-            userInput = input.nextLine().trim();
-            if (userInput.equalsIgnoreCase("Y") || userInput.equalsIgnoreCase("N")) validInput = true;
-            else Core.println("'" + userInput + "' is not a valid option.\n");
-        }
-        return userInput.equalsIgnoreCase("Y");
-    }
-
-    private void userAttack (Enemy enemy) throws InterruptedException {
+    private void userAttack(Enemy enemy) throws InterruptedException {
         double damage = calculateDamage();
         Random accuracyCheck = new Random();
 
@@ -176,16 +166,16 @@ public class User {
         else Core.println("You missed!"); // Triggers if user failed accuracy check
     }
 
-    public static void userHurt (User user, Enemy enemy, double damage) throws InterruptedException {
+    public static void userHurt(User user, Enemy enemy, double damage) throws InterruptedException {
         user.hitPoints -= (int) (damage + 0.5);
         user.hitPoints = user.getHitPoints(); // Prevents negative hitPoints value
 
         Core.println("\n" + enemy.getName() + " dealt " + (int) damage + " damage!\n" + "You're now at " + user.hitPoints + " health.\n");
 
-        Thread.sleep(500);
+        Core.threadSleep();
     }
 
-    private void userEat () throws InterruptedException {
+    private void userEat() throws InterruptedException {
         boolean hasBread = breadAmount > 0;
         boolean hasPizza = pizzaAmount > 0;
         boolean validInput = false;
@@ -226,17 +216,19 @@ public class User {
                     case "1" -> {
                         Food bread = Food.bread(); // Initialize bread object to pull data from
                         breadAmount--;
+                        hitPoints += bread.getInstantHealth();
                         hunger += bread.getSaturation();
                         if (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                        Core.println("You ate " + bread.getName() + " and are now " + hunger + "% full.");
+                        Core.println("You ate " + bread.getName() + " and are now at " + hitPoints + " health and " + hunger + "% hunger.");
                         validInput = true;
                     }
                     case "2" -> {
                         Food pizza = Food.pizza(); // Initialize pizza object to pull data from
                         pizzaAmount--;
+                        hitPoints += pizza.getInstantHealth();
                         hunger += pizza.getSaturation();
                         if  (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                        Core.println("You ate " + pizza.getName() + " and are now " + hunger + "% full.");
+                        Core.println("You ate " + pizza.getName() + " and are now at " + hitPoints + " health and " + hunger + "% hunger.");
                         validInput = true;
                     }
                     default -> Core.println("'" + userInput + "' is not a valid option.\n");
@@ -248,9 +240,10 @@ public class User {
                 if (userInput.equals("1")) {
                     Food bread = Food.bread(); // Initialize bread object to pull data from
                     breadAmount--;
+                    hitPoints += bread.getInstantHealth();
                     hunger += bread.getSaturation();
                     if (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                    Core.println("You ate " + bread.getName() + "and are now " + hunger + "% full.");
+                    Core.println("You ate " + bread.getName() + " and are now at " + hitPoints + " health and " + hunger + "% hunger.");
                     validInput = true;
                 } else Core.println("'" + userInput + "' is not a valid option.\n");
             }
@@ -260,16 +253,17 @@ public class User {
                 if (userInput.equals("1")) {
                     Food pizza = Food.pizza(); // Initialize pizza object to pull data from
                     pizzaAmount--;
+                    hitPoints += pizza.getInstantHealth();
                     hunger += pizza.getSaturation();
                     if  (hunger > 100) hunger = 100; // Ensures hunger doesn't exceed 100%
-                    Core.println("You ate " + pizza.getName() + " and are now " + hunger + "% full.");
+                    Core.println("You ate " + pizza.getName() + " and are now at " + hitPoints + " health and " + hunger + "% hunger.");
                     validInput = true;
                 } else Core.println("'" + userInput + "' is not a valid option.\n");
             }
         }
     }
 
-    private void userPassiveHeal () throws InterruptedException {
+    private void userPassiveHeal() throws InterruptedException {
         int healAmount = 10; // May be adjusted for balancing purposes
         if (hunger >= 80) {
             hitPoints += healAmount;
@@ -278,53 +272,60 @@ public class User {
         else Core.println("You are hungry! Eat some food to passively heal.");
     }
 
-    private void userPassiveHunger () {
+    private void userPassiveHunger() {
         int hungerAmount = 10; // May be adjusted for balancing purposes
         if (hunger > 0) {
             hunger = Math.max(0, hunger - hungerAmount); // Avoid notifying user since this is implied and would only clutter terminal
         }
     }
 
-    private void userInspect (Enemy enemy) throws InterruptedException {
+    private void userInspect(Enemy enemy) throws InterruptedException {
         Core.println(enemy.enemyStats());
     }
 
-    private void userDeath () throws InterruptedException {
+    private void userDeath() throws InterruptedException {
         Core.println("\n\n\nYou died! Press any key to exit.");
         userInput = input.nextLine().trim();
         System.exit(0);
     }
 
-    private void userConfirm () throws InterruptedException {
+    private void userConfirm() throws InterruptedException {
         Core.println("\nPress 'Enter' to continue.");
         userInput = input.nextLine().trim();
     }
 
-    public String userStats () {
-        return "Faction: " + faction.getName() + " | Weapon: " + weapon.getName()
+    public boolean userContinue() throws InterruptedException {
+        boolean validInput = false;
+        while (!validInput) {
+            Core.println("\nWould you like to continue? [Y/N]: ");
+            userInput = input.nextLine().trim();
+            if (userInput.equalsIgnoreCase("Y") || userInput.equalsIgnoreCase("N")) validInput = true;
+            else Core.println("'" + userInput + "' is not a valid option.\n");
+        }
+        return userInput.equalsIgnoreCase("Y");
+    }
+
+    public String userStats() {
+        return "Faction: " + faction.name() + " | Weapon: " + weapon.getName()
                 + "\nHP: " + getHitPoints() + " | Hunger: " + getHunger() + "% | Damage: " + calculateDamage() + " | Accuracy: " + calculateAccuracy() + "%";
     }
 
-    private double calculateDamage () { // Applies any valid buffs & debuffs to the User's damage value
+    private double calculateDamage() { // Applies any valid buffs & debuffs to the User's damage value
         // Will adjust formula if / when I develop the buff & debuff system
         return weapon.getBaseDamage();
     }
 
-    private double calculateAccuracy () { // Applies any valid buffs & debuffs to the User's accuracy value
+    private double calculateAccuracy() { // Applies any valid buffs & debuffs to the User's accuracy value
         // Will adjust formula if / when I develop the buff & debuff system
         return weapon.getBaseAccuracy();
     }
 
-    public String getName () {
-        return name;
-    }
-
-    public int getHitPoints () {
+    public int getHitPoints() {
         if (hitPoints < 0) hitPoints = 0;
         return hitPoints;
     }
 
-    public int getHunger () {
+    public int getHunger() {
         return hunger;
     }
 }

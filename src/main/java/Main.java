@@ -1,14 +1,16 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        // Utils
+        // Utilities
         Scanner input = new Scanner(System.in);
 
-        // Internal Variables
-        User user = null;
+        // Internals
         boolean gameActive = true;
         boolean validInput = false;
+
+        // User Info
+        User user = null;
         String userInput;
         String userName = "";
 
@@ -35,15 +37,18 @@ public class Main {
             switch (userInput) {
                 case "1" -> {
                     Core.setPrintSpeed(0);
+                    Core.setSleepSpeed(0);
                     validInput = true;
                 }
                 case "2" -> {
                     Core.setPrintSpeed(10);
+                    Core.setSleepSpeed(500);
                     validInput = true;
                 }
-                case "3" -> validInput = true; // No need to specify printSpeed since it's assigned to 50ms on program start
+                case "3" -> validInput = true; // printSpeed: 25ms | sleepSpeed: 750ms
                 case "4" -> {
                     Core.setPrintSpeed(50);
+                    Core.setSleepSpeed(1000);
                     validInput = true;
                 }
                 default -> Core.println("'" + userInput + "' is not a valid input!");
@@ -73,11 +78,11 @@ public class Main {
             Core.print("What is your faction? [1: Warrior, 2: Archer]: ");
             userInput = input.next();
             if (userInput.equals("1")) {
-                user = new User(userName, 1);
+                user = new User(userName, Faction.warrior());
                 validInput = true;
             }
             else if (userInput.equals("2")) {
-                user = new User(userName, 2);
+                user = new User(userName, Faction.archer());
                 validInput = true;
             }
             else Core.println("'" + userInput + "' is not a valid input!");
